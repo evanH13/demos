@@ -23,6 +23,7 @@ profile_config = ProfileConfig(
     ),
 )
 
+# Add Comment
 jaffle_dbt = DbtDag(
     project_config=project_config,
     profile_config=profile_config,
