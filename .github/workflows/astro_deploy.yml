@@ -14,4 +14,4 @@ jobs:
       uses: astronomer/deploy-action@v0.10.1
       with:
         deployment-id: cmh1frzqm1u0k01jxubsr8q5g
-        working-directory: ./cosmos_project
+      working-directory: cosmos_project
