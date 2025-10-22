@@ -6,4 +6,3 @@ select
   count(distinct o.ORDER_ID) as ORDER_COUNT
 from {{ ref('stg_customers') }} c
 left join {{ ref('stg_orders') }} o using (CUSTOMER_ID)
-group by 1,2,3
