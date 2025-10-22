@@ -3,7 +3,7 @@ from airflow import DAG
 from airflow.operators.empty import EmptyOperator
 from airflow.operators.python import PythonOperator
 
-from cosmos import ProjectConfig, ProfileConfig, RenderConfig
+from cosmos import ProjectConfig, ProfileConfig, RenderConfig, TestBehavior
 from cosmos import DbtTaskGroup
 from cosmos.profiles import SnowflakeUserPasswordProfileMapping
 
@@ -49,7 +49,7 @@ with DAG(
         profile_config=profile_config,
         render_config=RenderConfig(
             select=["staging.*"],
-            test_behavior="after_each",  # run tests after the staging group
+            test_behavior=TestBehavior.AFTER_EACH,  # run tests after the staging group
         ),
     )
 
@@ -60,7 +60,7 @@ with DAG(
         profile_config=profile_config,
         render_config=RenderConfig(
             select=["marts.*"],
-            test_behavior="after_all",  # run tests after the marts group
+            test_behavior=TestBehavior.AFTER_EACH,  # run tests after the marts group
         ),
     )
 
