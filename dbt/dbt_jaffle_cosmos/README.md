@@ -1,3 +1,15 @@
+# Project Tour
+
+dags/
+  ├─ cosmos_dbt_snowflake_fieldengineer.py
+  ├─ cosmos_dbt_taskgroup_split_demo.py
+  └─ dbt_jaffle_cosmos/
+       ├─ dbt_project.yml
+       ├─ profiles.yml
+       ├─ seeds/
+       ├─ models/
+       └─ macros/
+
 # DBT Project Tour
 
 dags/dbt_jaffle_cosmos/

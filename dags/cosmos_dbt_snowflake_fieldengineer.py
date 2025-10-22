@@ -16,8 +16,8 @@ profile_config = ProfileConfig(
         conn_id="snowflake",
         profile_args={
             "database": "DEMO",
-            "schema": "FIELDENGINEER",
-            "warehouse": "PUBLIC",
+            "schema": "PUBLIC",
+            "warehouse": "TINY_ROBOTS",
             "role": "FIELDENGINEER",
         },
     ),
