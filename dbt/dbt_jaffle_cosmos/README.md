@@ -12,7 +12,7 @@ dags/
 
 # DBT Project Tour
 
-dags/dbt_jaffle_cosmos/
+dbt/dbt_jaffle_cosmos/
  ├─ seeds/              # RAW_CUSTOMERS, RAW_ORDERS, RAW_PAYMENTS
  ├─ models/
  │   ├─ staging/        # stg_customers, stg_orders, stg_payments (views)
