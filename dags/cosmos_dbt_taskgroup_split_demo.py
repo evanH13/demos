@@ -49,7 +49,7 @@ with DAG(
         profile_config=profile_config,
         render_config=RenderConfig(
             select=["staging.*"],
-            test_behavior="after_all",  # run tests after the staging group
+            test_behavior="after_each",  # run tests after the staging group
         ),
     )
 

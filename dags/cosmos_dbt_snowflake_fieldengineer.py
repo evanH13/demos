@@ -32,7 +32,7 @@ jaffle_dbt = DbtDag(
     ),
     render_config=RenderConfig(
         select=["staging.*","marts.*"],
-        test_behavior="after_all"
+        test_behavior="after_each"
     ),
     schedule=None,
     start_date=datetime(2024, 1, 1),
