@@ -1,5 +1,5 @@
 from datetime import datetime
-from cosmos import DbtDag, ProjectConfig, ProfileConfig, ExecutionConfig, RenderConfig
+from cosmos import DbtDag, ProjectConfig, ProfileConfig, ExecutionConfig, RenderConfig, TestBehavior
 from cosmos.constants import ExecutionMode
 from cosmos.profiles import SnowflakeUserPasswordProfileMapping
 
@@ -32,7 +32,7 @@ jaffle_dbt = DbtDag(
     ),
     render_config=RenderConfig(
         select=["staging.*","marts.*"],
-        test_behavior="after_each"
+        test_behavior=TestBehavior.AFTER_EACH
     ),
     schedule=None,
     start_date=datetime(2024, 1, 1),
