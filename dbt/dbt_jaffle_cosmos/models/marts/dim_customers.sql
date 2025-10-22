@@ -9,4 +9,4 @@ left join {{ ref('stg_orders') }} o
   on c.CUSTOMER_ID = o.CUSTOMER_ID
 group by
   c.CUSTOMER_ID,
-  c.FULL_NAME,
+  c.FULL_NAME

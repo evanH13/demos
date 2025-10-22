@@ -1,7 +1,10 @@
-# jaffle_shop_cosmos (FIELDENGINEER-only)
-All seeds and models build into SANDBOX.FIELDENGINEER.
+# DBT Project Tour
 
-After `dbt seed` you'll see: RAW_CUSTOMERS, RAW_ORDERS, RAW_PAYMENTS
-After `dbt run` you'll see: STG_CUSTOMERS, STG_ORDERS, STG_PAYMENTS, DIM_CUSTOMERS, FCT_ORDERS
-
-Trigger DAG: jaffle_shop_cosmos_snowflake_fieldengineer
+dags/dbt_jaffle_cosmos/
+ ├─ seeds/              # RAW_CUSTOMERS, RAW_ORDERS, RAW_PAYMENTS
+ ├─ models/
+ │   ├─ staging/        # stg_customers, stg_orders, stg_payments (views)
+ │   └─ marts/          # dim_customers, fct_orders (tables)
+ ├─ dbt_project.yml
+ ├─ packages.yml
+ └─ macros/             # (optional) generate_schema_name, alias, etc.
