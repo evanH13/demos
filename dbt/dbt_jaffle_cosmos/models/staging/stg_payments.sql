@@ -3,10 +3,10 @@ with source as (
 ),
 renamed as (
   select
-    ID as PAYMENT_ID,
-    ORDER_ID,
-    PAYMENT_METHOD,
-    try_to_decimal(AMOUNT) as AMOUNT
+    "ID" as PAYMENT_ID,
+    "ORDER_ID",
+    "PAYMENT_METHOD",
+    try_to_decimal("AMOUNT") as AMOUNT
   from source
 )
 select * from renamed

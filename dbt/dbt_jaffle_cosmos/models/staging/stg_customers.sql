@@ -3,11 +3,11 @@ with source as (
 ),
 renamed as (
   select
-    ID as CUSTOMER_ID,
-    FIRST_NAME,
-    LAST_NAME,
-    lower(EMAIL) as EMAIL,
-    FIRST_NAME || ' ' || LAST_NAME as FULL_NAME
+    "ID" as CUSTOMER_ID,
+    "FIRST_NAME",
+    "LAST_NAME",
+    lower("EMAIL") as EMAIL,
+    "FIRST_NAME" || ' ' || "LAST_NAME" as FULL_NAME
   from source
 )
 select * from renamed
