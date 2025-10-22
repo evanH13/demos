@@ -7,7 +7,7 @@ from cosmos import ProjectConfig, ProfileConfig, RenderConfig
 from cosmos import DbtTaskGroup
 from cosmos.profiles import SnowflakeUserPasswordProfileMapping
 
-DBT_PROJECT_PATH = "/usr/local/airflow/dags/dbt_jaffle_cosmos"
+DBT_PROJECT_PATH = "/usr/local/airflow/dbt/dbt_jaffle_cosmos"
 
 project_config = ProjectConfig(
     dbt_project_path=DBT_PROJECT_PATH,
