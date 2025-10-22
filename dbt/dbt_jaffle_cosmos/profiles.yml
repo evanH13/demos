@@ -8,7 +8,7 @@ jaffle_shop_cosmos:
       password: "{{ env_var('SNOWFLAKE_PASSWORD') }}"
       role: "FIELDENGINEER"
       warehouse: "TINY_ROBOTS"
-      database: "SANDBOX"
+      database: "DEMO"
       schema: "FIELDENGINEER"
       threads: 4
       client_session_keep_alive: true
