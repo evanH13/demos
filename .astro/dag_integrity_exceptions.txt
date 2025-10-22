@@ -1,3 +1,0 @@
-# Add dag files to exempt from parse test below. ex: dags/<test-file>
-dags/cosmos_dbt_snowflake_fieldengineer.py
-dags/cosmos_dbt_taskgroup_split_demo.py
