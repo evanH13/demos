@@ -11,13 +11,10 @@ models:
     +materialized: table
     staging:
       +materialized: view
-      +schema: DEMO
     marts:
       +materialized: table
-      +schema: DEMO
 seeds:
   jaffle_shop_cosmos:
-    +schema: DEMO
     +quote_columns: false
 dispatch:
   - macro_namespace: dbt_utils
