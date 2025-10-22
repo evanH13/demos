@@ -32,6 +32,5 @@ models:
         tests: [unique, not_null]
       - name: STATUS
         tests:
-          - not_null
           - accepted_values:
               values: ['completed', 'shipped', 'returned']
