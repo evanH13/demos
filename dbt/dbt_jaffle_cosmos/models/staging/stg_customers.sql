@@ -6,7 +6,6 @@ renamed as (
     "ID" as CUSTOMER_ID,
     "FIRST_NAME",
     "LAST_NAME",
-    "EMAIL" as EMAIL,
     "FIRST_NAME" || ' ' || "LAST_NAME" as FULL_NAME
   from source
 )
