@@ -19,8 +19,8 @@ profile_config = ProfileConfig(
     profile_mapping=SnowflakeUserPasswordProfileMapping(
         conn_id="snowflake",
         profile_args={
-            "database": "SANDBOX",
-            "schema": "FIELDENGINEER",
+            "database": "DEMO",
+            "schema": "PUBLIC",
             "warehouse": "TINY_ROBOTS",
             "role": "FIELDENGINEER",
         },

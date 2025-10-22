@@ -9,15 +9,18 @@ test-paths: ["tests"]
 models:
   jaffle_shop_cosmos:
     +materialized: table
+    +alias: "EVAN_{{ model.name | upper }}"
     staging:
       +materialized: view
-      +schema: FIELDENGINEER
+      +alias: "EVAN_{{ model.name | upper }}"
+      +schema: DEMO
     marts:
       +materialized: table
-      +schema: FIELDENGINEER
+      +alias: "EVAN_{{ model.name | upper }}"
+      +schema: DEMO
 seeds:
   jaffle_shop_cosmos:
-    +schema: FIELDENGINEER
+    +schema: DEMO
     +quote_columns: false
 dispatch:
   - macro_namespace: dbt_utils
