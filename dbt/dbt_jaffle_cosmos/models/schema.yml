@@ -25,4 +25,6 @@ models:
   - name: fct_orders
     columns:
       - name: ORDER_ID
-        tests: [unique, not_null]
+        tests:
+          - accepted_values:
+              values: [ 'completed', 'shipped', 'returned' ]
