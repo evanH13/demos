@@ -9,14 +9,11 @@ test-paths: ["tests"]
 models:
   jaffle_shop_cosmos:
     +materialized: table
-    +alias: "EVAN_{{ this.name | upper }}"
     staging:
       +materialized: view
-      +alias: "EVAN_{{ this.name | upper }}"
       +schema: DEMO
     marts:
       +materialized: table
-      +alias: "EVAN_{{ this.name | upper }}"
       +schema: DEMO
 seeds:
   jaffle_shop_cosmos:
