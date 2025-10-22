@@ -1,0 +1,7 @@
+ID,ORDER_ID,PAYMENT_METHOD,AMOUNT
+1,1,credit_card,40
+2,2,credit_card,60
+3,3,gift_card,25
+4,4,credit_card,50
+5,5,coupon,10
+6,5,credit_card,35

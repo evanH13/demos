@@ -1,0 +1,24 @@
+name: 'jaffle_shop_cosmos'
+version: '1.0.0'
+config-version: 2
+profile: 'jaffle_shop_cosmos'
+model-paths: ["models"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+test-paths: ["tests"]
+models:
+  jaffle_shop_cosmos:
+    +materialized: table
+    staging:
+      +materialized: view
+      +schema: FIELDENGINEER
+    marts:
+      +materialized: table
+      +schema: FIELDENGINEER
+seeds:
+  jaffle_shop_cosmos:
+    +schema: FIELDENGINEER
+    +quote_columns: false
+dispatch:
+  - macro_namespace: dbt_utils
+    search_order: ['dbt_utils', 'dbt']
