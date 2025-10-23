@@ -28,6 +28,7 @@ from pendulum import datetime as pendulum_datetime
     default_args={"owner": "Astro", "retries": 1},
     tags=["snowflake", "connection-test", "poc"],
     catchup=False,
+    params={"snowflake_conn_id": "snowflake"},  # Make connection ID configurable
 )
 def snowflake_connection_test():
     """
@@ -41,11 +42,14 @@ def snowflake_connection_test():
         Returns connection details and query results.
         """
         try:
+            # Get connection ID from DAG params or default
+            conn_id = context.get("params", {}).get("snowflake_conn_id", "snowflake")
+            
             # Initialize Snowflake hook
-            snowflake_hook = SnowflakeHook(snowflake_conn_id="snowflake_default")
+            snowflake_hook = SnowflakeHook(snowflake_conn_id=conn_id)
             
             # Get connection details
-            conn = snowflake_hook.get_connection("snowflake_default")
+            conn = snowflake_hook.get_connection(conn_id)
             
             # Test connection with the most basic query possible
             result = snowflake_hook.get_first("SELECT 1 as test")
