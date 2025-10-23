@@ -95,7 +95,13 @@ with DAG(
         Extract runtime configuration from DAG run configuration.
         Defaults to 'json' format if not specified.
         """
-        config = context.get("dag_run", {}).get("conf", {})
+        # Access the DAG run object directly
+        dag_run = context.get("dag_run")
+        if dag_run and hasattr(dag_run, 'conf'):
+            config = dag_run.conf or {}
+        else:
+            config = {}
+        
         output_format = config.get("output_format", "json")
         
         # Validate output format
