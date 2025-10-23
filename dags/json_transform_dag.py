@@ -212,6 +212,7 @@ with DAG(
         """
         # Get data from XCom
         json_data = context['ti'].xcom_pull(task_ids='load_json_data')
+        print(json_data)
         config = context['ti'].xcom_pull(task_ids='get_runtime_config')
         
         output_format = config["output_format"]
