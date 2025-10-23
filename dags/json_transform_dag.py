@@ -19,7 +19,8 @@ from io import StringIO
 from typing import Any, Dict, List
 from datetime import datetime
 
-from airflow.sdk import dag, task
+from airflow import DAG
+from airflow.operators.python import PythonOperator
 from airflow.providers.amazon.aws.hooks.s3 import S3Hook
 from pendulum import datetime as pendulum_datetime
 
@@ -76,7 +77,7 @@ SAMPLE_JSON_DATA = {
 
 
 # Define the DAG using context manager
-with dag(
+with DAG(
     dag_id="json_transform_dag",
     start_date=pendulum_datetime(2025, 1, 1),
     schedule=None,  # Manual trigger only
@@ -271,12 +272,9 @@ with dag(
         print(f"⏰ Completed at: {datetime.now()}")
     
     # Create tasks using PythonOperator
-    from airflow.operators.python import PythonOperator
-    
     get_config_task = PythonOperator(
         task_id="get_runtime_config",
         python_callable=get_runtime_config,
-        provide_context=True,
     )
     
     load_data_task = PythonOperator(
@@ -287,19 +285,16 @@ with dag(
     transform_data_task = PythonOperator(
         task_id="transform_data",
         python_callable=transform_data,
-        provide_context=True,
     )
     
     upload_s3_task = PythonOperator(
         task_id="upload_to_s3",
         python_callable=upload_to_s3,
-        provide_context=True,
     )
     
     log_completion_task = PythonOperator(
         task_id="log_completion",
         python_callable=log_completion,
-        provide_context=True,
     )
     
     # Define the task flow
