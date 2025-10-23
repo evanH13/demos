@@ -15,7 +15,7 @@ from typing import Any, Dict
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from airflow.providers.amazon.aws.hooks.sqs import SqsHook
-from airflow.sdk import Asset, AssetWatcher
+from airflow.providers.amazon.aws.sensors.sqs import SqsSensor
 from pendulum import datetime as pendulum_datetime
 
 
@@ -104,49 +104,71 @@ with DAG(
         Process the file notification from SQS.
         This is the main task that gets executed when a file is detected.
         """
-        # Get data from XCom
-        sqs_data = context['ti'].xcom_pull(task_ids='check_sqs_queue')
+        # Get the SQS message from the sensor
+        sqs_messages = context['ti'].xcom_pull(task_id='wait_for_sqs_message')
         
-        if sqs_data.get("file_detected"):
-            print("🎉 File notification received!")
-            print(f"📁 Bucket: {sqs_data.get('bucket', 'Unknown')}")
-            print(f"📄 Key: {sqs_data.get('key', 'Unknown')}")
-            print(f"⏰ Timestamp: {sqs_data.get('timestamp')}")
-            print(f"📨 Message ID: {sqs_data.get('message_id', 'Unknown')}")
+        if sqs_messages:
+            print("🎉 SQS message received!")
+            print(f"📨 Number of messages: {len(sqs_messages)}")
             
-            # Here you could add more processing logic:
-            # - Download the file from S3
-            # - Process the file content
-            # - Send notifications
-            # - Update databases
-            # - etc.
+            for message in sqs_messages:
+                print(f"📨 Message ID: {message.get('MessageId')}")
+                print(f"📄 Message Body: {message.get('Body')}")
+                
+                # Parse the message body (assuming it's JSON)
+                try:
+                    body_data = json.loads(message.get('Body', '{}'))
+                    print(f"📊 Parsed message data: {body_data}")
+                    
+                    # Extract file information if available
+                    if 'Records' in body_data:
+                        for record in body_data['Records']:
+                            if record.get('eventName') == 'ObjectCreated:Put':
+                                bucket = record.get('s3', {}).get('bucket', {}).get('name')
+                                key = record.get('s3', {}).get('object', {}).get('key')
+                                print(f"📁 New file detected: s3://{bucket}/{key}")
+                                
+                                # Here you could add more processing logic:
+                                # - Download the file from S3
+                                # - Process the file content
+                                # - Send notifications
+                                # - Update databases
+                                # - etc.
+                                
+                except json.JSONDecodeError:
+                    print(f"⚠️ Could not parse message body as JSON: {message.get('Body')}")
             
             print("✅ File notification processed successfully!")
         else:
-            print("ℹ️ No file notification to process")
+            print("ℹ️ No SQS messages to process")
     
     def log_completion(**context) -> None:
         """
         Log the completion of the file processing.
         """
-        sqs_data = context['ti'].xcom_pull(task_ids='check_sqs_queue')
+        sqs_messages = context['ti'].xcom_pull(task_id='wait_for_sqs_message')
         
         print("=" * 50)
-        print("📊 SQS Asset Monitor - Processing Complete")
+        print("📊 SQS Monitor - Processing Complete")
         print("=" * 50)
         print(f"🕐 Completed at: {datetime.now()}")
-        print(f"📨 Messages processed: {sqs_data.get('message_count', 0)}")
-        print(f"📁 File detected: {sqs_data.get('file_detected', False)}")
+        print(f"📨 Messages processed: {len(sqs_messages) if sqs_messages else 0}")
+        print(f"📁 File detected: {bool(sqs_messages)}")
         
-        if sqs_data.get('error'):
-            print(f"⚠️ Error: {sqs_data.get('error')}")
-        else:
+        if sqs_messages:
             print("✅ Processing completed successfully!")
+        else:
+            print("ℹ️ No messages to process")
     
-    # Create tasks
-    check_sqs_task = PythonOperator(
-        task_id="check_sqs_queue",
-        python_callable=check_sqs_queue,
+    # Create tasks using SqsSensor for proper SQS monitoring
+    sqs_sensor = SqsSensor(
+        task_id="wait_for_sqs_message",
+        sqs_queue="https://sqs.us-east-1.amazonaws.com/285860431378/lulu-airflow-queue",
+        aws_conn_id="s3_read_write",
+        max_messages=1,
+        wait_time_seconds=0,  # Don't wait, just check
+        poke_interval=30,  # Check every 30 seconds
+        timeout=300,  # 5 minutes timeout
     )
     
     process_notification_task = PythonOperator(
@@ -160,16 +182,4 @@ with DAG(
     )
     
     # Define the task flow
-    check_sqs_task >> process_notification_task >> log_completion_task
-
-
-# Define the Asset with AssetWatcher for SQS monitoring
-sqs_asset = Asset(
-    uri="sqs://lulu-airflow-queue",  # SQS queue identifier
-    watchers=[
-        AssetWatcher(
-            name="sqs_monitor",
-            trigger=None,  # We'll handle the trigger logic in the task
-        )
-    ]
-)
+    sqs_sensor >> process_notification_task >> log_completion_task
