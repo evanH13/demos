@@ -218,7 +218,7 @@ with dag(
     
     def upload_to_s3(**context) -> str:
         """
-        Upload the transformed data to S3.
+        Upload the transformed data to S3. Kick.
         """
         # Get data from XCom
         transformed_data = context['ti'].xcom_pull(task_ids='transform_data')
