@@ -14,6 +14,11 @@ with DAG(
         bash_command="echo 'Starting the DAG...'"
     )
 
+    hello_dan = BashOperator(
+        task_id="hello_dan",
+        bash_command="echo 'hi dan'"
+    )
+
     hello = BashOperator(
         task_id="say_hello",
         bash_command="echo 'Hello, Airflow!'"
@@ -24,4 +29,4 @@ with DAG(
         bash_command="echo 'All done!'"
     )
 
-    start >> hello >> end
+    start >> hello_dan >> hello >> end
