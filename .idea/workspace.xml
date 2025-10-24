@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e88f46d7-f854-4089-abdd-f8b4b3d764ae" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/dags/json_transform_dag.py" beforeDir="false" afterPath="$PROJECT_DIR$/dags/json_transform_dag.py" afterDir="false" />
-    </list>
+    <list default="true" id="e88f46d7-f854-4089-abdd-f8b4b3d764ae" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
