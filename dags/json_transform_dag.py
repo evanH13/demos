@@ -229,6 +229,7 @@ with DAG(
         Upload the transformed data to S3. Kick.
         """
         # Get data from XCom
+        # kick
         transformed_data = context['ti'].xcom_pull(task_ids='transform_data')
         config = context['ti'].xcom_pull(task_ids='get_runtime_config')
         
